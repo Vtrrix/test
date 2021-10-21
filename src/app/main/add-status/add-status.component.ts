@@ -1,16 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Editor, toHTML, Toolbar } from 'ngx-editor';
 
 @Component({
   selector: 'app-add-status',
   templateUrl: './add-status.component.html',
   styleUrls: ['./add-status.component.css'],
 })
-export class AddStatusComponent implements OnInit {
+export class AddStatusComponent implements OnInit, OnDestroy {
   //using reactive form for add Status form
-
+  form = new FormGroup({
+    editorContent: new FormControl(null, [Validators.required]),
+  });
   addStatusForm: FormGroup;
+  editor: Editor;
+  toolbar: Toolbar;
   constructor() {
+    this.editor = new Editor();
+    this.toolbar = [
+      ['bold', 'italic'],
+      ['underline', 'strike'],
+      ['code', 'blockquote'],
+      ['ordered_list', 'bullet_list'],
+      [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+      ['link', 'image'],
+      ['text_color', 'background_color'],
+      ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ];
     this.addStatusForm = new FormGroup({
       firstName: new FormControl(null, [
         Validators.required,
@@ -40,6 +56,12 @@ export class AddStatusComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  onSave() {}
+  ngOnDestroy(): void {
+    this.editor.destroy();
+  }
+  onSave() {
+    const html = toHTML(this.form.value.editorContent);
+    console.log(html);
+    document.getElementById('show')!.innerHTML = html;
+  }
 }

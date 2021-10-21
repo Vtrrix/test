@@ -6,21 +6,21 @@
         <input
           type="button"
           class="option-btn mx-0"
-          name="btnAddMore"
+          name="filterStatusListThisMonth"
           value="This Month"
           (click)="filterStatus('thisMonth')"
         />
         <input
           type="button"
           class="option-btn"
-          name="btnAddMore"
+          name="filterStatusListLastMonth"
           value="Last Month"
           (click)="filterStatus('lastMonth')"
         />
         <input
           type="button"
           class="option-btn"
-          name="btnAddMore"
+          name="filterStatusListCustom"
           value="Custom"
         />
       </div>
@@ -30,6 +30,7 @@
           class="option-btn"
           name="btnAddMore"
           value="Add Status"
+          [routerLink]="['/home', 'addstatus']"
         />
       </div>
     </div>

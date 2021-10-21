@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
+import { AddStatusComponent } from './main/add-status/add-status.component';
 import { EditProfileComponent } from './main/edit-profile/edit-profile.component';
 import { HomeComponent } from './main/home/home.component';
 import { MainComponent } from './main/main.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'editprofile', component: EditProfileComponent },
       { path: 'status', component: StatusListComponent },
+      { path: 'addstatus', component: AddStatusComponent },
     ],
   },
   { path: '**', component: HomeComponent },

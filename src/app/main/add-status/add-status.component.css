@@ -1,8 +1,9 @@
 .heading {
-  font-size: 2rem;
-  margin-top: 25px;
-  margin-bottom: 30px;
   padding-left: 20px;
+}
+.h2 {
+  margin-top: 25px;
+  margin-bottom: 10px;
 }
 
 .card {

@@ -8,6 +8,8 @@ import { Editor, toHTML, Toolbar } from 'ngx-editor';
   styleUrls: ['./add-status.component.css'],
 })
 export class AddStatusComponent implements OnInit, OnDestroy {
+  timeStamp: string;
+  currentdate = new Date();
   //using reactive form for add Status form
   form = new FormGroup({
     editorContent: new FormControl(null, [Validators.required]),
@@ -16,6 +18,9 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   editor: Editor;
   toolbar: Toolbar;
   constructor() {
+    const currentdate = new Date();
+
+    this.timeStamp = currentdate.toLocaleString();
     this.editor = new Editor();
     this.toolbar = [
       ['bold', 'italic'],

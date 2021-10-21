@@ -9,19 +9,26 @@ import { Editor, toHTML, Toolbar } from 'ngx-editor';
 })
 export class AddStatusComponent implements OnInit, OnDestroy {
   timeStamp: string;
+  statusID: string = '';
   currentdate = new Date();
+  statusNumber: number = 1;
   //using reactive form for add Status form
-  form = new FormGroup({
-    editorContent: new FormControl(null, [Validators.required]),
-  });
+
   addStatusForm: FormGroup;
-  editor: Editor;
+  editor1: Editor;
+  editor2: Editor;
+  editor3: Editor;
   toolbar: Toolbar;
+
   constructor() {
     const currentdate = new Date();
 
     this.timeStamp = currentdate.toLocaleString();
-    this.editor = new Editor();
+
+    this.editor1 = new Editor();
+    this.editor2 = new Editor();
+    this.editor3 = new Editor();
+
     this.toolbar = [
       ['bold', 'italic'],
       ['underline', 'strike'],
@@ -33,39 +40,68 @@ export class AddStatusComponent implements OnInit, OnDestroy {
       ['align_left', 'align_center', 'align_right', 'align_justify'],
     ];
     this.addStatusForm = new FormGroup({
-      firstName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(10),
-      ]),
-      middleName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(10),
-      ]),
-      lastName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(10),
-      ]),
-      phone: new FormControl(null, [
-        Validators.required,
-        Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
-      ]),
-      address: new FormControl(null, [
+      taskDone: new FormControl(null, [Validators.required]),
+      risk: new FormControl(null, [Validators.required]),
+      nextWeekPlan: new FormControl(null, [Validators.required]),
+
+      title: new FormControl(null, [
         Validators.required,
         Validators.minLength(5),
-        Validators.maxLength(40),
+        Validators.maxLength(30),
       ]),
     });
   }
 
-  ngOnInit(): void {}
-  ngOnDestroy(): void {
-    this.editor.destroy();
+  ngOnInit(): void {
+    this.statusID =
+      this.currentdate.getFullYear() +
+      '-' +
+      this.currentdate
+        .toLocaleString('default', { month: 'short' })
+        .toUpperCase() +
+      '-WK' +
+      this.getWeek(this.currentdate) +
+      '000' +
+      this.statusNumber;
   }
-  onSave() {
-    const html = toHTML(this.form.value.editorContent);
+  ngOnDestroy(): void {
+    this.editor1.destroy();
+    this.editor2.destroy();
+    this.editor3.destroy();
+  }
+  getWeek(dowOffset: number | Date) {
+    dowOffset = typeof dowOffset == 'number' ? dowOffset : 0; //default dowOffset to zero
+    var newYear = new Date(this.currentdate.getFullYear(), 0, 1);
+    var day = newYear.getDay() - dowOffset; //the day of week the year begins on
+    day = day >= 0 ? day : day + 7;
+    var daynum =
+      Math.floor(
+        (this.currentdate.getTime() -
+          newYear.getTime() -
+          (this.currentdate.getTimezoneOffset() - newYear.getTimezoneOffset()) *
+            60000) /
+          86400000
+      ) + 1;
+    var weeknum;
+    //if the year starts before the middle of a week
+    if (day < 4) {
+      weeknum = Math.floor((daynum + day - 1) / 7) + 1;
+      if (weeknum > 52) {
+        const nYear = new Date(this.currentdate.getFullYear() + 1, 0, 1);
+        day = nYear.getDay() - dowOffset;
+        day = day >= 0 ? day : day + 7;
+        /*if the next year starts before the middle of
+                  the week, it is week #1 of that year*/
+        weeknum = day < 4 ? 1 : 53;
+      }
+    } else {
+      weeknum = Math.floor((daynum + day - 1) / 7);
+    }
+    return weeknum;
+  }
+
+  onSubmit() {
+    const html = toHTML(this.addStatusForm.value.takDone);
     console.log(html);
     document.getElementById('show')!.innerHTML = html;
   }

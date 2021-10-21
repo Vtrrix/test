@@ -1,3 +1,6 @@
+.container-fluid {
+  overflow-x: hidden;
+}
 .heading {
   padding-left: 20px;
 }

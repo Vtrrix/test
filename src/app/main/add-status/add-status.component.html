@@ -2,97 +2,86 @@
   <div class="row justify-content-center">
     <div class="col-lg-11 col-md-11">
       <div class="row justify-content-center">
-        <div class="col-10">
+        <div class="col-9">
           <h2 class="heading h2">Add Status</h2>
-          <h3 class="heading h5">{{ timeStamp }}</h3>
+          <h3 class="heading h6 fw-normal">{{ timeStamp }}</h3>
         </div>
-        <div class="col-2">
-          <h3 class="heading h5">{{ timeStamp }}</h3>
+        <div class="col-3">
+          <p class="heading mt-5">ID : {{ statusID }}</p>
         </div>
       </div>
-      <form [formGroup]="form">
-        <div class="NgxEditor__Wrapper">
-          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
-          </ngx-editor-menu>
 
-          <ngx-editor
-            [editor]="editor"
-            formControlName="editorContent"
-          ></ngx-editor>
-        </div>
-      </form>
-      <form [formGroup]="addStatusForm" (ngSubmit)="onSave()" class="form-card">
-        <div class="row justify-content-center">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-4">
-                <div class="form-floating mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="firstName"
-                    id="floatingInputFirstName"
-                    placeholder="firstName"
-                  />
-                  <label for="floatingInputFirstName ">First Name</label>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="form-floating mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="middleName"
-                    id="floatingInputMiddleName"
-                    placeholder="middleName"
-                  />
-                  <label for="floatingInputMiddleName ">Middle Name</label>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="form-floating mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="lastName"
-                    id="floatingInputLastName"
-                    placeholder="lastName"
-                  />
-                  <label for="floatingInputLastName ">Last Name</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-12">
-            <div class="form-floating mb-3">
+      <form
+        [formGroup]="addStatusForm"
+        (ngSubmit)="onSubmit()"
+        class="form-card mt-4"
+      >
+        <div class="row d-flex">
+          <div class="col-5">
+            <div class="form-floating">
               <input
                 type="text"
                 class="form-control"
-                formControlName="phone"
-                id="floatingInputPhone"
-                placeholder="Phone"
+                formControlName="title"
+                id="floatingInputTitle"
+                placeholder="Title"
               />
-              <label for="floatingInputPhone ">Phone</label>
+              <label for="floatingInputTitle ">Title</label>
             </div>
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="col-12">
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="address"
-                id="floatingInputAddress"
-                placeholder="address"
-              />
-              <label for="floatingInputAddress ">Address</label>
+            <div class="NgxEditor__Wrapper">
+              <label for="floatingInputFirstName " class="h4 p-3"
+                >Accomplishments Done</label
+              >
+
+              <ngx-editor-menu [editor]="editor1" [toolbar]="toolbar">
+              </ngx-editor-menu>
+
+              <ngx-editor
+                [editor]="editor1"
+                formControlName="taskDone"
+              ></ngx-editor>
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mt-4 justify-content-center">
+          <div class="col-12">
+            <div class="NgxEditor__Wrapper">
+              <label for="floatingInputFirstName " class="h4 p-3"
+                >Concerns/Risks/Impoertant topic:</label
+              >
+
+              <ngx-editor-menu [editor]="editor2" [toolbar]="toolbar">
+              </ngx-editor-menu>
+
+              <ngx-editor
+                [editor]="editor2"
+                formControlName="risk"
+              ></ngx-editor>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4 justify-content-center">
+          <div class="col-12">
+            <div class="NgxEditor__Wrapper">
+              <label for="floatingInputFirstName " class="h4 p-3"
+                >Plans for next week</label
+              >
+
+              <ngx-editor-menu [editor]="editor3" [toolbar]="toolbar">
+              </ngx-editor-menu>
+
+              <ngx-editor
+                [editor]="editor3"
+                formControlName="nextWeekPlan"
+              ></ngx-editor>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
           <div id="btn-container" class="col-sm-12">
             <button
               type="button"

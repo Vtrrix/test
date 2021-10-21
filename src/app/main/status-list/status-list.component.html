@@ -1,0 +1,92 @@
+<div class="container mt-5">
+  <div class="row px-4">
+    <h3 class="mb-5">Submitted Status List</h3>
+    <div class="row mb-4">
+      <div class="col-md-6 d-flex flex-row">
+        <input
+          type="button"
+          class="option-btn mx-0"
+          name="btnAddMore"
+          value="This Month"
+          (click)="filterStatus('thisMonth')"
+        />
+        <input
+          type="button"
+          class="option-btn"
+          name="btnAddMore"
+          value="Last Month"
+          (click)="filterStatus('lastMonth')"
+        />
+        <input
+          type="button"
+          class="option-btn"
+          name="btnAddMore"
+          value="Custom"
+        />
+      </div>
+      <div class="col-md-6 d-flex flex-row-reverse">
+        <input
+          type="button"
+          class="option-btn"
+          name="btnAddMore"
+          value="Add Status"
+        />
+      </div>
+    </div>
+
+    <table class="table table-borderless table-responsive shadow card-1 p-4">
+      <thead>
+        <tr class="border-bottom">
+          <th><span class="ml-4">Status ID</span></th>
+          <th><span class="ml-2">Title</span></th>
+          <th><span class="ml-3">Status</span></th>
+          <th><span class="ml-3">Submitted Date & Time</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let status of currentStatusList" class="border-bottom">
+          <td>
+            <div class="p-2">
+              <span class="font-weight-bold">{{ status.status_id }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="p-2">
+              <span class="font-weight-bold">{{ status.title }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="p-2">
+              <span class="font-weight-bold">Submitted</span>
+            </div>
+          </td>
+          <td>
+            <div class="p-2">
+              <span class="font-weight-bold">{{
+                status.submit_time_stamp
+              }}</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row mb-4">
+      <div class="col-md-12 d-flex flex-row-reverse">
+        <input
+          (click)="nextPage()"
+          type="button"
+          class="page-change-btn"
+          name="btnNext"
+          value="Next"
+        />
+        <input
+          (click)="prevPage()"
+          type="button"
+          class="page-change-btn"
+          name="btnPrev"
+          value="Prev"
+        />
+      </div>
+    </div>
+  </div>
+</div>

@@ -82,6 +82,11 @@ g-invalid.ng-touched {
   margin-right: 10px;
   margin-left: 57vw;
 }
+.add-btn {
+  transform: translate(650%, 45%);
+  padding: 0px 7px 4px 7px !important;
+  border-radius: 50% !important;
+}
 .btn {
   margin-left: 20px;
   padding: 13px 20px 12px;

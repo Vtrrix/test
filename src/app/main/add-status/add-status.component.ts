@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Editor, toHTML, Toolbar } from 'ngx-editor';
 
 @Component({
@@ -12,6 +12,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   statusID: string = '';
   currentdate = new Date();
   statusNumber: number = 1;
+  leaveID: number;
   //using reactive form for add Status form
 
   addStatusForm: FormGroup;
@@ -21,6 +22,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   toolbar: Toolbar;
 
   constructor() {
+    this.leaveID = 0;
     const currentdate = new Date();
 
     this.timeStamp = currentdate.toLocaleString();
@@ -40,15 +42,15 @@ export class AddStatusComponent implements OnInit, OnDestroy {
       ['align_left', 'align_center', 'align_right', 'align_justify'],
     ];
     this.addStatusForm = new FormGroup({
-      taskDone: new FormControl(null, [Validators.required]),
-      risk: new FormControl(null, [Validators.required]),
-      nextWeekPlan: new FormControl(null, [Validators.required]),
-
       title: new FormControl(null, [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(30),
       ]),
+      taskDone: new FormControl(null, [Validators.required]),
+      risk: new FormControl(null, [Validators.required]),
+      nextWeekPlan: new FormControl(null, [Validators.required]),
+      leaves: new FormArray([]),
     });
   }
 
@@ -100,9 +102,38 @@ export class AddStatusComponent implements OnInit, OnDestroy {
     return weeknum;
   }
 
+  getControls() {
+    return (this.addStatusForm.get('leaves') as FormArray).controls;
+  }
+  // to add leave input elements to form
+  addLeave() {
+    (<FormArray>this.addStatusForm.get('leaves')).push(new FormControl(null));
+    // this.addStatusForm.addControl(
+    //   `leave${this.leaveID}`,
+    //   new FormControl(null)
+    // );
+
+    // const inputEle = document.createElement('input');
+    // inputEle.type = 'date';
+    // document.getElementById('leaveContainer')!.appendChild(inputEle);
+
+    // console.log(document.getElementById('leaveContainer')?.children);
+
+    // !.innerHTML += `
+    //  <input
+    //     type="date"
+    //     class="form-control"
+    //     formControlName="leave${this.leaveID}"
+    //     id="floatingInputleave${this.leaveID}"
+    //     placeholder="Leave"
+    //   />`;
+    // this.leaveID++;
+  }
   onSubmit() {
-    const html = toHTML(this.addStatusForm.value.takDone);
+    const html = toHTML(this.addStatusForm.value.taskDone);
     console.log(html);
     document.getElementById('show')!.innerHTML = html;
+
+    console.log(this.addStatusForm);
   }
 }

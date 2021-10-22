@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Editor, toHTML, Toolbar } from 'ngx-editor';
+import { StatusService } from 'src/app/services/status.service';
 
 @Component({
   selector: 'app-add-status',
@@ -11,7 +13,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   timeStamp: string;
   statusID: string = '';
   currentdate = new Date();
-  statusNumber: number = 1;
+  statusNumber: number = 1111;
   leaveID: number;
   //using reactive form for add Status form
 
@@ -21,7 +23,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   editor3: Editor;
   toolbar: Toolbar;
 
-  constructor() {
+  constructor(private statusService: StatusService, private router: Router) {
     this.leaveID = 0;
     const currentdate = new Date();
 
@@ -63,7 +65,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
         .toUpperCase() +
       '-WK' +
       this.getWeek(this.currentdate) +
-      '000' +
+      '-' +
       this.statusNumber;
   }
   ngOnDestroy(): void {
@@ -108,32 +110,28 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   // to add leave input elements to form
   addLeave() {
     (<FormArray>this.addStatusForm.get('leaves')).push(new FormControl(null));
-    // this.addStatusForm.addControl(
-    //   `leave${this.leaveID}`,
-    //   new FormControl(null)
-    // );
-
-    // const inputEle = document.createElement('input');
-    // inputEle.type = 'date';
-    // document.getElementById('leaveContainer')!.appendChild(inputEle);
-
-    // console.log(document.getElementById('leaveContainer')?.children);
-
-    // !.innerHTML += `
-    //  <input
-    //     type="date"
-    //     class="form-control"
-    //     formControlName="leave${this.leaveID}"
-    //     id="floatingInputleave${this.leaveID}"
-    //     placeholder="Leave"
-    //   />`;
-    // this.leaveID++;
   }
   onSubmit() {
     const html = toHTML(this.addStatusForm.value.taskDone);
     console.log(html);
-    document.getElementById('show')!.innerHTML = html;
-
-    console.log(this.addStatusForm);
+    this.statusService
+      .addStatus(
+        this.statusID,
+        this.addStatusForm.value.title,
+        'submitted',
+        toHTML(this.addStatusForm.value.taskDone),
+        toHTML(this.addStatusForm.value.nextWeekPlan),
+        toHTML(this.addStatusForm.value.risk),
+        this.addStatusForm.value.leaves
+      )
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.router.navigate(['/home', 'status']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 }

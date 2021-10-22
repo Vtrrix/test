@@ -39,4 +39,34 @@ export class StatusService {
       }
     );
   }
+
+  addStatus(
+    status_id: string,
+    title: string,
+    status: string,
+    task_done: string,
+    next_week_plans: string,
+    concerns: string,
+    leaves_planned: string[]
+  ) {
+    return this.http.post<(string | number)[]>(
+      `https://pa4favllgg.execute-api.ap-south-1.amazonaws.com/prod/${localStorage.getItem(
+        'username'
+      )}/statuses`,
+      {
+        status_id: status_id,
+        title: title,
+        status: status,
+        task_done: task_done,
+        next_week_plans: next_week_plans,
+        concerns: concerns,
+        leaves_planned: leaves_planned,
+      },
+      {
+        headers: new HttpHeaders({
+          token: `${localStorage.getItem('token')}`,
+        }),
+      }
+    );
+  }
 }

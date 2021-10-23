@@ -13,7 +13,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   timeStamp: string;
   statusID: string = '';
   currentdate = new Date();
-  statusNumber: number = 1111;
+  statusNumber: number = 1112;
   leaveID: number;
   //using reactive form for add Status form
 

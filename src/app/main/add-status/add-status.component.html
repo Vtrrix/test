@@ -17,67 +17,62 @@
         class="form-card mt-4"
       >
         <div class="row d-flex">
-          <div class="col-5">
-            <div class="form-floating">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="title"
-                id="floatingInputTitle"
-                placeholder="Title"
-              />
-              <label for="floatingInputTitle ">Title</label>
+          <div class="col-8">
+            <div class="row">
+              <div class="col-8">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="title"
+                    id="floatingInputTitle"
+                    placeholder="Title"
+                  />
+                  <label for="floatingInputTitle ">Title</label>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-12">
-            <div class="NgxEditor__Wrapper">
-              <label for="floatingInputFirstName " class="h4 p-3"
-                >Accomplishments Done</label
+            <div>
+              <label for="floatingInputFirstName " class="h4 mt-4"
+                >Accomplishments Done :</label
               >
+              <div class="NgxEditor__Wrapper">
+                <ngx-editor-menu [editor]="editor1" [toolbar]="toolbar">
+                </ngx-editor-menu>
 
-              <ngx-editor-menu [editor]="editor1" [toolbar]="toolbar">
-              </ngx-editor-menu>
-
-              <ngx-editor
-                [editor]="editor1"
-                formControlName="taskDone"
-              ></ngx-editor>
+                <ngx-editor
+                  [editor]="editor1"
+                  formControlName="taskDone"
+                ></ngx-editor>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row mt-4 justify-content-center">
-          <div class="col-12">
-            <div class="NgxEditor__Wrapper">
-              <label for="floatingInputFirstName " class="h4 p-3"
+            <div>
+              <label for="floatingInputFirstName " class="h4 mt-4"
                 >Concerns/Risks/Important topic:</label
               >
+              <div class="NgxEditor__Wrapper">
+                <ngx-editor-menu [editor]="editor2" [toolbar]="toolbar">
+                </ngx-editor-menu>
 
-              <ngx-editor-menu [editor]="editor2" [toolbar]="toolbar">
-              </ngx-editor-menu>
-
-              <ngx-editor
-                [editor]="editor2"
-                formControlName="risk"
-              ></ngx-editor>
+                <ngx-editor
+                  [editor]="editor2"
+                  formControlName="risk"
+                ></ngx-editor>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-8">
-            <div class="NgxEditor__Wrapper">
-              <label for="floatingInputFirstName " class="h4 p-3"
-                >Plans for next week</label
+            <div>
+              <label for="floatingInputFirstName " class="h4 mt-4"
+                >Plans for next week :</label
               >
+              <div class="NgxEditor__Wrapper">
+                <ngx-editor-menu [editor]="editor3" [toolbar]="toolbar">
+                </ngx-editor-menu>
 
-              <ngx-editor-menu [editor]="editor3" [toolbar]="toolbar">
-              </ngx-editor-menu>
-
-              <ngx-editor
-                [editor]="editor3"
-                formControlName="nextWeekPlan"
-              ></ngx-editor>
+                <ngx-editor
+                  [editor]="editor3"
+                  formControlName="nextWeekPlan"
+                ></ngx-editor>
+              </div>
             </div>
           </div>
           <div class="col-4">
@@ -102,6 +97,7 @@
             </div>
           </div>
         </div>
+
         <div class="row mt-4">
           <div id="btn-container" class="col-sm-12">
             <button

@@ -191,7 +191,7 @@ thead tr:nth-child(3) th {
 .custom-date-input-group {
   min-width: 400px;
   position: fixed;
-  transform: translate(28vw, -18vh);
+  transform: translate(37vw, -18vh);
 }
 .filter-btn {
   transform: translateX(320%);

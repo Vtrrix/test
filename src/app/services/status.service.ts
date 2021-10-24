@@ -34,7 +34,9 @@ export class StatusService {
       return this.http.get<[status[], number]>(
         `https://pa4favllgg.execute-api.ap-south-1.amazonaws.com/prod/${localStorage.getItem(
           'username'
-        )}/statuses?key=${this.lastStatusID}&limit=${pageSize}`,
+        )}/statuses?key=${this.lastStatusID}&limit=${pageSize}&start_date=${
+          this.FromDate
+        }&end_date=${this.ToDate}`,
         {
           headers: new HttpHeaders({
             token: `${localStorage.getItem('token')}`,

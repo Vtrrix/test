@@ -9,10 +9,10 @@ import { StatusListComponent } from './main/status-list/status-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'user', pathMatch: 'full' },
   { path: 'login', component: AuthComponent },
   {
-    path: 'home',
+    path: 'user',
     component: MainComponent,
     children: [
       { path: '', component: HomeComponent },

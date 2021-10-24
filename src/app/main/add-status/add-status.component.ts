@@ -155,7 +155,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (data) => {
-          this.router.navigate(['/home', 'status']);
+          this.router.navigate(['/user', 'status']);
         },
         (error) => {
           console.log(error);

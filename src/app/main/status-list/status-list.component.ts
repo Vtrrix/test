@@ -119,8 +119,8 @@ export class StatusListComponent implements OnInit {
     if (type === 'thisMonth') {
       const date = new Date();
 
-      this.statusService.FromDate = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
-      this.statusService.ToDate = `${date.getFullYear()}/${date.getMonth()}/1`;
+      this.statusService.FromDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+      this.statusService.ToDate = `${date.getFullYear()}-${date.getMonth()}-1`;
     }
     if (type === 'lastMonth') {
       const date = new Date();
@@ -129,16 +129,18 @@ export class StatusListComponent implements OnInit {
         this.statusService.FromDate = `${
           date.getFullYear() - 1
         }/12/${date.getDay()}`;
-        this.statusService.ToDate = `${date.getFullYear() - 1}/12/1`;
+        this.statusService.ToDate = `${date.getFullYear() - 1}-12-1`;
       } else {
-        this.statusService.FromDate = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
-        this.statusService.ToDate = `${date.getFullYear()}/${date.getMonth()}/1`;
+        this.statusService.FromDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+        this.statusService.ToDate = `${date.getFullYear()}-${date.getMonth()}-1`;
       }
     }
     if (type === 'custom') {
-      this.statusService.FromDate = `${this.fromDate?.year}/${this.fromDate?.month}/${this.fromDate?.day}`;
-      this.statusService.ToDate = `${this.toDate?.year}/${this.toDate?.month}/${this.toDate?.day}`;
+      this.statusService.FromDate = `${this.fromDate?.year}-${this.fromDate?.month}-${this.fromDate?.day}`;
+      this.statusService.ToDate = `${this.toDate?.year}-${this.toDate?.month}-${this.toDate?.day}`;
     }
+
+    this.fetchStatus();
   }
 
   onDateSelection(date: NgbDate) {

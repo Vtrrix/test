@@ -219,3 +219,20 @@ thead tr:nth-child(3) th {
 .custom-day.faded {
   background-color: rgba(2, 117, 216, 0.5);
 }
+
+.page-size {
+  padding: 5px 10px;
+  font-weight: 600;
+  color: #6c757d;
+  border-radius: 5px 0 0 5px;
+  background: #efefef;
+}
+.btn-page-size {
+  background: #efefef;
+}
+.btn-page-size:hover {
+  background: #e6e6e6;
+}
+/* .footer {
+  margin-bottom: 300px !important;
+} */

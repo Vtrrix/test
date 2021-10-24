@@ -100,24 +100,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
     let lastStatusWeek;
     this.statusService.lastStatusID = this.statusService.fullStatusListID[0];
     this.statusService.getStatusList(1).subscribe((status) => {
-      lastStatusWeek = status[0][0].status_id.slice(
-        status[0][0].status_id.indexOf('K') + 1
-      );
-      lastStatusWeek = lastStatusWeek.slice(0, lastStatusWeek.indexOf('-'));
-
-      if (lastStatusWeek == this.getWeek(this.currentdate).toString()) {
-        let newStatusNumber =
-          parseInt(
-            status[0][0].status_id.slice(
-              status[0][0].status_id.lastIndexOf('-') + 1
-            )
-          ) + 1;
-
-        this.statusNumber = newStatusNumber.toString();
-
-        this.statusNumber = this.statusNumber.padStart(4, '0');
-
-        // update status ID
+      if (status[0].length === 0) {
         this.statusID =
           this.currentdate.getFullYear() +
           '-' +
@@ -126,8 +109,37 @@ export class AddStatusComponent implements OnInit, OnDestroy {
             .toUpperCase() +
           '-WK' +
           this.getWeek(this.currentdate) +
-          '-' +
-          this.statusNumber;
+          '-0001';
+      } else {
+        lastStatusWeek = status[0][0].status_id.slice(
+          status[0][0].status_id.indexOf('K') + 1
+        );
+        lastStatusWeek = lastStatusWeek.slice(0, lastStatusWeek.indexOf('-'));
+
+        if (lastStatusWeek == this.getWeek(this.currentdate).toString()) {
+          let newStatusNumber =
+            parseInt(
+              status[0][0].status_id.slice(
+                status[0][0].status_id.lastIndexOf('-') + 1
+              )
+            ) + 1;
+
+          this.statusNumber = newStatusNumber.toString();
+
+          this.statusNumber = this.statusNumber.padStart(4, '0');
+
+          // update status ID
+          this.statusID =
+            this.currentdate.getFullYear() +
+            '-' +
+            this.currentdate
+              .toLocaleString('default', { month: 'short' })
+              .toUpperCase() +
+            '-WK' +
+            this.getWeek(this.currentdate) +
+            '-' +
+            this.statusNumber;
+        }
       }
     });
 

@@ -4,7 +4,7 @@ import {
   NgbDate,
   NgbDateParserFormatter,
 } from '@ng-bootstrap/ng-bootstrap';
-import { StatusService, status } from 'src/app/services/status.service';
+import { StatusService } from 'src/app/services/status.service';
 
 @Component({
   selector: 'app-status-list',
@@ -18,6 +18,9 @@ export class StatusListComponent implements OnInit {
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
   currentPage: number;
+
+  pageSize: number;
+
   // represents the status list present on the view with the number of elements always less than or equal to page size
   currentStatusList: {
     title: string;
@@ -35,6 +38,7 @@ export class StatusListComponent implements OnInit {
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
   ) {
+    this.pageSize = 5;
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
     this.currentPage = 0;
@@ -43,7 +47,14 @@ export class StatusListComponent implements OnInit {
 
   ngOnInit(): void {
     this.statusService.lastStatusID = '-1';
-    this.fetchStatus();
+    this.fetchStatus(this.pageSize);
+  }
+
+  changePageSize(size: number) {
+    this.pageSize = size;
+    this.statusService.lastStatusID = '-1';
+    this.statusService.fullStatusListID = ['-1'];
+    this.fetchStatus(this.pageSize);
   }
 
   convertDate(stamp: string): string {
@@ -64,8 +75,8 @@ export class StatusListComponent implements OnInit {
   }
 
   // api call to get status
-  fetchStatus() {
-    this.statusService.getStatusList(6).subscribe(
+  fetchStatus(size: number) {
+    this.statusService.getStatusList(size).subscribe(
       (statusList) => {
         // to update current view -------------
         statusList[0].map((status) => {
@@ -98,14 +109,16 @@ export class StatusListComponent implements OnInit {
     // status id of last element of previous page
     this.statusService.lastStatusID =
       this.statusService.fullStatusListID[this.currentPage];
-    this.fetchStatus();
+    console.log(this.statusService.fullStatusListID);
+
+    this.fetchStatus(this.pageSize);
   }
   prevPage() {
     this.currentPage--;
     // status id of last element of previous to previous page
     this.statusService.lastStatusID =
       this.statusService.fullStatusListID[this.currentPage];
-    this.fetchStatus();
+    this.fetchStatus(this.pageSize);
   }
 
   filterStatus(type: 'default' | 'thisMonth' | 'lastMonth' | 'custom') {
@@ -140,7 +153,7 @@ export class StatusListComponent implements OnInit {
       this.statusService.ToDate = `${this.toDate?.year}-${this.toDate?.month}-${this.toDate?.day}`;
     }
 
-    this.fetchStatus();
+    this.fetchStatus(this.pageSize);
   }
 
   onDateSelection(date: NgbDate) {

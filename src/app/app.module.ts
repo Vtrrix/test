@@ -15,6 +15,7 @@ import { EditProfileComponent } from './main/edit-profile/edit-profile.component
 import { StatusListComponent } from './main/status-list/status-list.component';
 import { AddStatusComponent } from './main/add-status/add-status.component';
 import { NgxEditorModule, schema } from 'ngx-editor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { NgxEditorModule, schema } from 'ngx-editor';
         remove: 'Remove',
       },
     }),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

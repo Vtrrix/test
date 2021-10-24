@@ -13,7 +13,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   timeStamp: string;
   statusID: string = '';
   currentdate = new Date();
-  statusNumber: number = 1112;
+  statusNumber: string = '0001';
   leaveID: number;
   //using reactive form for add Status form
 
@@ -57,16 +57,7 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.statusID =
-      this.currentdate.getFullYear() +
-      '-' +
-      this.currentdate
-        .toLocaleString('default', { month: 'short' })
-        .toUpperCase() +
-      '-WK' +
-      this.getWeek(this.currentdate) +
-      '-' +
-      this.statusNumber;
+    this.calculateStatusID();
   }
   ngOnDestroy(): void {
     this.editor1.destroy();
@@ -102,6 +93,45 @@ export class AddStatusComponent implements OnInit, OnDestroy {
       weeknum = Math.floor((daynum + day - 1) / 7);
     }
     return weeknum;
+  }
+
+  calculateStatusID() {
+    const tempLastStatusID = this.statusService.lastStatusID;
+    let lastStatusWeek;
+    this.statusService.lastStatusID = this.statusService.fullStatusListID[0];
+    this.statusService.getStatusList(1).subscribe((status) => {
+      lastStatusWeek = status[0][0].status_id.slice(
+        status[0][0].status_id.indexOf('K') + 1
+      );
+      lastStatusWeek = lastStatusWeek.slice(0, lastStatusWeek.indexOf('-'));
+
+      if (lastStatusWeek == this.getWeek(this.currentdate).toString()) {
+        let newStatusNumber =
+          parseInt(
+            status[0][0].status_id.slice(
+              status[0][0].status_id.lastIndexOf('-') + 1
+            )
+          ) + 1;
+
+        this.statusNumber = newStatusNumber.toString();
+
+        this.statusNumber = this.statusNumber.padStart(4, '0');
+
+        // update status ID
+        this.statusID =
+          this.currentdate.getFullYear() +
+          '-' +
+          this.currentdate
+            .toLocaleString('default', { month: 'short' })
+            .toUpperCase() +
+          '-WK' +
+          this.getWeek(this.currentdate) +
+          '-' +
+          this.statusNumber;
+      }
+    });
+
+    this.statusService.lastStatusID = tempLastStatusID;
   }
 
   getControls() {

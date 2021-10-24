@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+} from '@ng-bootstrap/ng-bootstrap';
 import { StatusService, status } from 'src/app/services/status.service';
 
 @Component({
@@ -7,6 +12,11 @@ import { StatusService, status } from 'src/app/services/status.service';
   styleUrls: ['./status-list.component.css'],
 })
 export class StatusListComponent implements OnInit {
+  public isCollapsed = true;
+  hoveredDate: NgbDate | null = null;
+
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
   currentPage: number;
   // represents the status list present on the view with the number of elements always less than or equal to page size
   currentStatusList: {
@@ -20,7 +30,13 @@ export class StatusListComponent implements OnInit {
     managerial_remarks: string;
   }[];
 
-  constructor(private statusService: StatusService) {
+  constructor(
+    private statusService: StatusService,
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter
+  ) {
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
     this.currentPage = 0;
     this.currentStatusList = [];
   }
@@ -49,7 +65,7 @@ export class StatusListComponent implements OnInit {
 
   // api call to get status
   fetchStatus() {
-    this.statusService.getStatusList().subscribe(
+    this.statusService.getStatusList(6).subscribe(
       (statusList) => {
         // to update current view -------------
         statusList[0].map((status) => {
@@ -93,9 +109,54 @@ export class StatusListComponent implements OnInit {
   }
 
   filterStatus(type: 'thisMonth' | 'lastMonth' | 'custom') {
-    const currentDate = new Date();
-
-    if (type === 'thisMonth') {
+    if (type === 'custom') {
+      console.log(this.fromDate, this.toDate);
     }
+  }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (
+      this.fromDate &&
+      !this.toDate &&
+      date &&
+      date.after(this.fromDate)
+    ) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return (
+      this.fromDate &&
+      !this.toDate &&
+      this.hoveredDate &&
+      date.after(this.fromDate) &&
+      date.before(this.hoveredDate)
+    );
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return (
+      date.equals(this.fromDate) ||
+      (this.toDate && date.equals(this.toDate)) ||
+      this.isInside(date) ||
+      this.isHovered(date)
+    );
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed))
+      ? NgbDate.from(parsed)
+      : currentValue;
   }
 }

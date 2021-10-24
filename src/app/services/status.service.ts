@@ -19,19 +19,17 @@ export class StatusService {
   // represents the list of all the status ID fetched from api
   public fullStatusListID: string[];
   public lastStatusID: string;
-  public pageSize: number;
 
   constructor(private http: HttpClient) {
     this.fullStatusListID = ['-1'];
-    this.pageSize = 6;
     this.lastStatusID = '-1';
   }
 
-  getStatusList() {
+  getStatusList(pageSize: number) {
     return this.http.get<[status[], number]>(
       `https://pa4favllgg.execute-api.ap-south-1.amazonaws.com/prod/${localStorage.getItem(
         'username'
-      )}/statuses?key=${this.lastStatusID}&limit=${this.pageSize}`,
+      )}/statuses?key=${this.lastStatusID}&limit=${pageSize}`,
       {
         headers: new HttpHeaders({
           token: `${localStorage.getItem('token')}`,

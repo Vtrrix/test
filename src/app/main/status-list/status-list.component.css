@@ -191,10 +191,10 @@ thead tr:nth-child(3) th {
 .custom-date-input-group {
   min-width: 400px;
   position: fixed;
-  transform: translate(28vw, -15vh);
+  transform: translate(28vw, -18vh);
 }
 .filter-btn {
-  transform: translateX(360%);
+  transform: translateX(320%);
 }
 .date-btn {
   /* min-width: 150px; */

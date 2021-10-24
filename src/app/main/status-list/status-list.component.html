@@ -6,14 +6,23 @@
         <input
           type="button"
           class="option-btn mx-0"
+          name="filterStatusListDefault"
+          value="Default"
+          (click)="filterStatus('default')"
+        />
+        <input
+          type="button"
+          class="option-btn"
           name="filterStatusListThisMonth"
           value="This Month"
+          (click)="filterStatus('thisMonth')"
         />
         <input
           type="button"
           class="option-btn"
           name="filterStatusListLastMonth"
           value="Last Month"
+          (click)="filterStatus('lastMonth')"
         />
         <input
           type="button"
@@ -59,7 +68,7 @@
                         class="btn date-btn btn-outline-secondary filter-btn"
                         (click)="filterStatus('custom')"
                       >
-                        Sort
+                        Filter
                       </button>
                     </div>
 

@@ -143,7 +143,6 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     const html = toHTML(this.addStatusForm.value.taskDone);
-    console.log(html);
     this.statusService
       .addStatus(
         this.statusID,
@@ -156,7 +155,6 @@ export class AddStatusComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (data) => {
-          console.log(data);
           this.router.navigate(['/home', 'status']);
         },
         (error) => {

@@ -108,9 +108,36 @@ export class StatusListComponent implements OnInit {
     this.fetchStatus();
   }
 
-  filterStatus(type: 'thisMonth' | 'lastMonth' | 'custom') {
+  filterStatus(type: 'default' | 'thisMonth' | 'lastMonth' | 'custom') {
+    this.statusService.lastStatusID = '-1';
+    this.statusService.fullStatusListID = ['-1'];
+
+    if (type === 'default') {
+      this.statusService.FromDate = null;
+      this.statusService.ToDate = null;
+    }
+    if (type === 'thisMonth') {
+      const date = new Date();
+
+      this.statusService.FromDate = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
+      this.statusService.ToDate = `${date.getFullYear()}/${date.getMonth()}/1`;
+    }
+    if (type === 'lastMonth') {
+      const date = new Date();
+
+      if (date.getMonth() == 1) {
+        this.statusService.FromDate = `${
+          date.getFullYear() - 1
+        }/12/${date.getDay()}`;
+        this.statusService.ToDate = `${date.getFullYear() - 1}/12/1`;
+      } else {
+        this.statusService.FromDate = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
+        this.statusService.ToDate = `${date.getFullYear()}/${date.getMonth()}/1`;
+      }
+    }
     if (type === 'custom') {
-      console.log(this.fromDate, this.toDate);
+      this.statusService.FromDate = `${this.fromDate?.year}/${this.fromDate?.month}/${this.fromDate?.day}`;
+      this.statusService.ToDate = `${this.toDate?.year}/${this.toDate?.month}/${this.toDate?.day}`;
     }
   }
 

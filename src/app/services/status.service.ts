@@ -19,10 +19,14 @@ export class StatusService {
   // represents the list of all the status ID fetched from api
   public fullStatusListID: string[];
   public lastStatusID: string;
+  public FromDate: string | null;
+  public ToDate: string | null;
 
   constructor(private http: HttpClient) {
     this.fullStatusListID = ['-1'];
     this.lastStatusID = '-1';
+    this.FromDate = null;
+    this.ToDate = null;
   }
 
   getStatusList(pageSize: number) {

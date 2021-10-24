@@ -30,6 +30,18 @@ export class StatusService {
   }
 
   getStatusList(pageSize: number) {
+    if (this.FromDate && this.ToDate) {
+      return this.http.get<[status[], number]>(
+        `https://pa4favllgg.execute-api.ap-south-1.amazonaws.com/prod/${localStorage.getItem(
+          'username'
+        )}/statuses?key=${this.lastStatusID}&limit=${pageSize}`,
+        {
+          headers: new HttpHeaders({
+            token: `${localStorage.getItem('token')}`,
+          }),
+        }
+      );
+    }
     return this.http.get<[status[], number]>(
       `https://pa4favllgg.execute-api.ap-south-1.amazonaws.com/prod/${localStorage.getItem(
         'username'

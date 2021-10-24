@@ -6,6 +6,7 @@ import { EditProfileComponent } from './main/edit-profile/edit-profile.component
 import { HomeComponent } from './main/home/home.component';
 import { MainComponent } from './main/main.component';
 import { StatusListComponent } from './main/status-list/status-list.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,9 +19,10 @@ const routes: Routes = [
       { path: 'editprofile', component: EditProfileComponent },
       { path: 'status', component: StatusListComponent },
       { path: 'addstatus', component: AddStatusComponent },
+      { path: '**', component: NotFoundComponent },
     ],
   },
-  { path: '**', component: HomeComponent },
+  { path: '**', component: NotFoundComponent },
   // add 404 component
 ];
 

@@ -17,6 +17,7 @@ import { AddStatusComponent } from './main/add-status/add-status.component';
 import { NgxEditorModule, schema } from 'ngx-editor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     StatusListComponent,
     AddStatusComponent,
     NotFoundComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,

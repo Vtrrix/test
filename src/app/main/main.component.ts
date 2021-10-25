@@ -59,7 +59,6 @@ export class MainComponent implements OnInit {
                 ? false
                 : true;
           } else {
-            console.log(data[0]);
           }
         },
         (error) => {

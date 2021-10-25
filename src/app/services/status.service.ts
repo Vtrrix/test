@@ -65,7 +65,7 @@ export class StatusService {
     concerns: string,
     leaves_planned: string[]
   ) {
-    return this.http.post<(string | number)[]>(
+    return this.http.post<[string, number]>(
       `https://pa4favllgg.execute-api.ap-south-1.amazonaws.com/prod/${localStorage.getItem(
         'username'
       )}/statuses`,

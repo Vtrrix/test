@@ -10,6 +10,8 @@ import { StatusService } from 'src/app/services/status.service';
   styleUrls: ['./add-status.component.css'],
 })
 export class AddStatusComponent implements OnInit, OnDestroy {
+  showAlert: boolean;
+  alertMessage: string;
   timeStamp: string;
   statusID: string = '';
   currentdate = new Date();
@@ -24,6 +26,9 @@ export class AddStatusComponent implements OnInit, OnDestroy {
   toolbar: Toolbar;
 
   constructor(private statusService: StatusService, private router: Router) {
+    this.showAlert = false;
+    this.alertMessage = '';
+
     this.leaveID = 0;
     const currentdate = new Date();
 
@@ -167,10 +172,16 @@ export class AddStatusComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (data) => {
-          this.router.navigate(['/user', 'status']);
+          if (data[1] === 201) {
+            this.router.navigate(['/user', 'status']);
+          } else {
+            this.alertMessage = data[0];
+            this.showAlert = true;
+          }
         },
         (error) => {
-          console.log(error);
+          this.alertMessage = error.message;
+          this.showAlert = true;
         }
       );
   }

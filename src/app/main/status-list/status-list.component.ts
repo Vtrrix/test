@@ -12,6 +12,8 @@ import { StatusService } from 'src/app/services/status.service';
   styleUrls: ['./status-list.component.css'],
 })
 export class StatusListComponent implements OnInit {
+  showAlert: boolean;
+  alertMessage: string;
   public isCollapsed = true;
   hoveredDate: NgbDate | null = null;
 
@@ -38,6 +40,8 @@ export class StatusListComponent implements OnInit {
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
   ) {
+    this.showAlert = false;
+    this.alertMessage = '';
     this.pageSize = 5;
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
@@ -78,27 +82,39 @@ export class StatusListComponent implements OnInit {
   fetchStatus(size: number) {
     this.statusService.getStatusList(size).subscribe(
       (statusList) => {
-        // to update current view -------------
-        statusList[0].map((status) => {
-          status.submit_time_stamp = this.convertDate(status.submit_time_stamp);
-        });
-        this.currentStatusList = [...statusList[0]];
-        //-----------------------------------
+        if (statusList[1] === 200) {
+          if (statusList[0].length !== 0) {
+            // to update current view -------------
+            statusList[0].map((status) => {
+              status.submit_time_stamp = this.convertDate(
+                status.submit_time_stamp
+              );
+            });
+            this.currentStatusList = [...statusList[0]];
+            //-----------------------------------
 
-        // to update fullStatusListID if needed------------------
-        if (
-          !this.statusService.fullStatusListID.includes(
-            this.currentStatusList[this.currentStatusList.length - 1].status_id
-          )
-        ) {
-          this.statusService.fullStatusListID.push(
-            this.currentStatusList[this.currentStatusList.length - 1].status_id
-          );
+            // to update fullStatusListID if needed------------------
+            if (
+              !this.statusService.fullStatusListID.includes(
+                this.currentStatusList[this.currentStatusList.length - 1]
+                  .status_id
+              )
+            ) {
+              this.statusService.fullStatusListID.push(
+                this.currentStatusList[this.currentStatusList.length - 1]
+                  .status_id
+              );
+            }
+            //----------------------------------------------------
+          }
+        } else {
+          this.alertMessage = <string>(<unknown>statusList[0]);
+          this.showAlert = true;
         }
-        //----------------------------------------------------
       },
       (error) => {
-        console.log(error);
+        this.alertMessage = error.message;
+        this.showAlert = true;
       }
     );
   }

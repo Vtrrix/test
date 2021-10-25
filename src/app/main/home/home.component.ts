@@ -7,11 +7,15 @@ import { ProfileService } from 'src/app/services/profile.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  showAlert: boolean;
+  alertMessage: string;
   profileData;
   // feilds: string[];
   // values: (string | string[])[];
 
   constructor(private profileService: ProfileService) {
+    this.showAlert = false;
+    this.alertMessage = '';
     this.profileData = profileService.profileData;
     // this.feilds = [];
     // this.values = [];
@@ -27,11 +31,13 @@ export class HomeComponent implements OnInit {
           // this.values = Object.values(data[0]);
           // console.log(this.feilds, this.values);
         } else {
-          console.log(data[0]);
+          this.showAlert = true;
+          this.alertMessage = <string>(<unknown>data[0]);
         }
       },
       (error) => {
-        console.log(error);
+        this.showAlert = true;
+        this.alertMessage = error.message;
       }
     );
   }

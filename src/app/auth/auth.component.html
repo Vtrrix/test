@@ -54,11 +54,6 @@
         </div>
       </div>
     </div>
-    <div class="notice notice-danger" *ngIf="showAlert">
-      <strong>{{ errorMessage }}</strong>
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">
-        &times;
-      </span>
-    </div>
+    <app-alert *ngIf="showAlert" [errorMessage]="errorMessage"></app-alert>
   </div>
 </div>

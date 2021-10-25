@@ -9,10 +9,14 @@ import { ProfileService } from 'src/app/services/profile.service';
   styleUrls: ['./edit-profile.component.css'],
 })
 export class EditProfileComponent implements OnInit {
+  showAlert: boolean;
+  alertMessage: string;
   //using reactive form for edit profile form
 
   editProfileForm: FormGroup;
   constructor(private profileService: ProfileService, private router: Router) {
+    this.alertMessage = '';
+    this.showAlert = false;
     this.editProfileForm = new FormGroup({
       firstName: new FormControl(null, [
         Validators.required,
@@ -54,12 +58,14 @@ export class EditProfileComponent implements OnInit {
         if (data[1] === 201) {
           this.router.navigate(['']);
         } else {
-          console.log(data[0]);
+          this.alertMessage = data[0];
+          this.showAlert = true;
         }
-        console.log(data);
       },
       (error) => {
-        console.log(error);
+        this.alertMessage = error.message;
+
+        this.showAlert = true;
       }
     );
   }
